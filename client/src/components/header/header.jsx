@@ -32,7 +32,7 @@ const Header = () => {
                 </>
               ) : (
                 <div className="flex items-center gap-3">
-                  <div className="cursor-pointer">Kayıt Ol</div>
+                  <div className="cursor-pointer" onClick={()=>navigate('/register')}>Kayıt Ol</div>
                   <Button style={{ backgroundColor: '#F4D03F', borderColor: 'yellow', color: 'black' }} size="large" onClick={() => navigate('/login')}>Giriş Yap</Button>
                 </div>
               )

@@ -44,7 +44,7 @@ const Login = () => {
                 },
               ]}
             >
-              <Input className="h-10 min-w-[300px]"></Input>
+              <Input className="h-10 min-w-[300px]" placeholder="Kullanıcı Adı"></Input>
             </Form.Item>
 
             <Form.Item
@@ -56,7 +56,7 @@ const Login = () => {
                 },
               ]}
             >
-              <Input.Password className="h-10 min-w-[300px]"/>
+              <Input.Password className="h-10 min-w-[300px]" placeholder="Şifre"/>
             </Form.Item>
 
             <Form.Item className="flex justify-center">
