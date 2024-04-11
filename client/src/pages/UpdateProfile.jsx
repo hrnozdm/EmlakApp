@@ -1,35 +1,48 @@
-import React, { useState } from "react";
-import Header from "../header/header";
+import React, { useEffect } from "react";
+import Header from "../components/header/header";
 import { Form, Input, Button, message } from "antd";
-import api from "../../api/api";
-import { useNavigate } from "react-router-dom";
-const Register = () => {
-  const navigate = useNavigate();
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUser,setUser } from "../redux/GetUserSlice";
+import {useNavigate} from "react-router-dom";
+import api from "../api/api";
+
+const UpdateProfile = () => {
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
-  const onFinishRegister = async (values) => {
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
+  const userData = useSelector((state) => state.getUser);
+  console.log(userData);
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    dispatch(getUser(id));
+  }, [id, dispatch]);
+
+  const onFinishUserUpdate = async (values) => {
     try {
-        setLoading(true);
-        const response=await api.post('/register',values);
-        console.log(response.data);
-        setTimeout(() => {
-            setLoading(false);
-            navigate('/login');
-        }, 1000);
+      const response = await api.put(`userUpdate/${id}`, values);
+      if (response.data) {
+        dispatch(setUser(response.data));
+        await api.post('/logout');
+        message.success('Kullanıcı Güncelleme İşlemi Başarılı');
+        navigate('/login');
+      }
     } catch (error) {
-        message.error('Bu Kullanıcı Mevcut');
-        setLoading(false);
+      message.error('Hatalı İşlem');
+      console.log(error);
     }
-    
   };
+
   return (
     <div>
       <Header />
-
-      <div className="container mx-auto my-auto flex items-center justify-around">
+      <div className="container mx-auto  flex items-center justify-around">
         <div className="leftRegister">
-          <h1 className="text-3xl font-bold mb-5 text-center">Kayıt Ol</h1>
-          <Form layout="vertical" onFinish={onFinishRegister} form={form}>
+          <h1 className="text-3xl font-bold mb-5 text-center">
+            Kullanıcıyı Güncelle
+          </h1>
+          <Form layout="vertical" form={form} onFinish={onFinishUserUpdate}>
             <Form.Item
               name="email"
               rules={[
@@ -38,8 +51,9 @@ const Register = () => {
                   message: "Email Alanı Boş Geçilemez!",
                 },
               ]}
+              initialValue={userData?.userData?.user?.email}
             >
-              <Input className="h-10 min-w-[300px]" placeholder="Email"/>
+              <Input className="h-10 min-w-[300px]" placeholder="Email" />
             </Form.Item>
 
             <Form.Item
@@ -50,6 +64,7 @@ const Register = () => {
                   message: "Kullanıcı Adı Alanı Boş Geçilemez!",
                 },
               ]}
+              initialValue={userData?.userData?.user?.username}
             >
               <Input
                 className="h-10 min-w-[300px]"
@@ -65,7 +80,7 @@ const Register = () => {
                   message: "Şifre Alanı Boş Geçilemez!",
                 },
               ]}
-            
+              
             >
               <Input.Password
                 className="h-10 min-w-[300px]"
@@ -111,19 +126,23 @@ const Register = () => {
                   color: "white",
                 }}
                 htmlType="submit"
-                loading={loading}
               >
-                Kayıt Ol
+                Kullanıcıyı Güncelle
               </Button>
             </Form.Item>
           </Form>
         </div>
         <div className="rightRegister">
-          <img src="bg.png" alt="" width={600} height={800} />
+          <img
+            src={currentUser.avatar || "/noavatar.jpg"}
+            alt=""
+            width={400}
+            height={400}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default UpdateProfile;

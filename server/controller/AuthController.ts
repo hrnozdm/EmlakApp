@@ -3,6 +3,7 @@ import User from "../models/UserModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 class AuthController{
+
     public static async register(req:Request,res:Response):Promise<void>{
         try {
           const {password}=req.body;

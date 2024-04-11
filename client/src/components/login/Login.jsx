@@ -12,7 +12,8 @@ const Login = () => {
             setLoading(true);
             const response=await api.post('/login',values);
             const user=response?.data?.user;
-            localStorage.setItem('user',JSON.stringify({username:user.username,email:user.email}));
+            console.log(user);
+            localStorage.setItem('user',JSON.stringify({id:user._id,username:user.username,email:user.email,avatar:user.avatar}));
             setTimeout(() => {
                 setLoading(false);
                 navigate('/');

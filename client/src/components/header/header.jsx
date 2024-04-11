@@ -10,7 +10,7 @@ const Header = () => {
         <div className="container mx-auto flex justify-between">
           <div className="leftNavbar flex items-center gap-5 p-4 font-bold">
             <span onClick={()=>navigate('/')} className="cursor-pointer">
-              <img src="logo.png" alt="" width={40} height={40} />
+              <img src="/logo.png" alt="" width={40} height={40} />
             </span>
             <span className="cursor-pointer" onClick={()=>navigate('/')}>Anasayfa</span>
             <span>Hakkında</span>
@@ -23,7 +23,7 @@ const Header = () => {
               currentUser ? (
                 <>
                   <div className="flex items-center gap-2">
-                    <img src="noavatar.jpg" alt="" className="rounded-full" width={40} height={40} />
+                    <img src={currentUser.avatar || '/noavatar.jpg'} alt="" className="rounded-full" width={40} height={40} />
                     <span>{currentUser.username}</span>
                   </div>
                    <div>
