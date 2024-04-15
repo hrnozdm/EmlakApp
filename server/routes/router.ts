@@ -25,6 +25,7 @@ router.put('/userUpdate/:id',verifyToken,UserController.userUpdate);
 
 //!PosController
 router.post('/addPos',verifyToken,PosController.addPost);
+router.get('/getAllPos',verifyToken,PosController.getAllPost);
 
 
 export default router;

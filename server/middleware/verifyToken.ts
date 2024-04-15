@@ -19,6 +19,7 @@ export const verifyToken = (req:AuthRequest,res:Response,next:NextFunction) =>{
        if (err){
         return res.status(403).json({'msg':'Token is not Valid'});
        }
+       //console.log(payload);
         
        req.userId=payload.id;
        next();

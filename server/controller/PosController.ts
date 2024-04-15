@@ -19,7 +19,11 @@ class PosController {
     public static async getAllPost(req:AuthRequest,res:Response){
       const tokenId=req.userId;
       try {
-        
+        const post = await Pos.find({userId:tokenId});
+        if (post.length===0){
+          return res.status(404).json({'msg':'Post Not Found'});
+        }
+        res.status(200).json(post);
         
       } catch (error) {
           res.status(500).json(error);

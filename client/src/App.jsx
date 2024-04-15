@@ -10,6 +10,7 @@ import ProfilPage from "./pages/ProfilPage";
 import Register from "./components/register/Register";
 import UpdateProfile from "./pages/UpdateProfile";
 import CreatePosPage from "./pages/CreatePosPage";
+import PostDetail from "./pages/PostDetail";
 
 export const AuthGuard = ({ children }) => {
   const isLogin = localStorage.getItem("user");
@@ -46,7 +47,11 @@ function App() {
           />
 
           <Route path="/profile/addPost" element={ <AuthGuard>
-            <CreatePosPage></CreatePosPage>
+            <CreatePosPage/>
+          </AuthGuard>} />
+
+          <Route path="/profile/postdetail/:id" element={ <AuthGuard>
+           <PostDetail/>
           </AuthGuard>} />
         </Routes>
       </Router>
